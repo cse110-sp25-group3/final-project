@@ -1,38 +1,49 @@
-// pages/app.js
-import { createHeader } from '../components/header.js';
-import { renderFeed } from './feed.js';
-import { renderApplications } from './view-applications.js';
-import { renderPreferences } from './job-preferences.js';
-import { renderDocuments } from './documents.js';
-import { renderAutoApply } from './auto-apply-settings.js';
+// js/app.js
 
-const routes = {
-  '#feed':              renderFeed,
-  '#view-applications': renderApplications,
-  '#job-preferences':   renderPreferences,
-  '#documents':         renderDocuments,
-  '#auto-apply-settings': renderAutoApply,
+import { createHeader } from '../components/header.js';
+import { renderFeed }           from './feed/feed.js';
+import { renderApplications }   from './view applications/view-applications.js';
+import { renderPreferences }    from './job preferences/job-preferences.js';
+import { renderDocuments }      from './documents/documents.js';
+
+// Map each HTML filename → its renderer + title
+const pageMap = {
+  '/pages/feed/feed.html': {
+    render: renderFeed,
+    title: 'Job Feed'
+  },
+  'view-applications.html': {
+    render: renderApplications,
+    title: 'Your Applications'
+  },
+  'job-preferences.html': {
+    render: renderPreferences,
+    title: 'Job Preferences'
+  },
+  'documents.html': {
+    render: renderDocuments,
+    title: 'Documents'
+  },
 };
 
-// pages/app.js
-function loadPage() {
-  const app = document.getElementById('app');
-  app.innerHTML = '';             // clear old header+content
-  app.prepend(createHeader());    // mount header
+document.addEventListener('DOMContentLoaded', () => {
+  // 1) Figure out which HTML file we’re on
+  const file = window.location.pathname.split('/').pop() || '/pages/feed/feed.html';
+  const page = pageMap[file] || pageMap['/pages/feed/feed.html'];
 
-  // create a spot just for page‐specific content
+  // 2) Grab your app container
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+
+  // 3) Mount a dynamic header
+  app.prepend(createHeader());
+
+  // 4) Create & style a “content” wrapper (same as before)
   const content = document.createElement('div');
-  content.style.margin = "25px";
   content.id = 'content';
+  content.style.margin = '25px';
   app.append(content);
 
-  const key = window.location.hash || '#feed';
-  const renderFn = routes[key] || renderFeed;
-  renderFn(content);              // pass ONLY the content div
-}
-
-
-window.addEventListener('DOMContentLoaded', () => {
-  window.addEventListener('hashchange', loadPage);
-  loadPage();
+  // 5) Call the page’s render function
+  page.render(content);
 });

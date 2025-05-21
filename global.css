@@ -15,9 +15,6 @@
   
     /* accent */
     --color-star:             #F59E0B;
-
-    --font-size: 0.5rem;
-    --line-height: 1; 
   }
 
 html,body{
@@ -44,8 +41,4 @@ html,body{
 
     display: flex;
     flex-direction: column;
-}
-
-.app h1{
-    font-size: calc(var(--font-size) * 1.2);
 }
