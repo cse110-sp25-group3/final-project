@@ -7,9 +7,10 @@ export function createHeader() {
       <span class="site-title">JobSwipe</span>
       <nav id="nav-menu" class="nav-menu hidden">
         <ul>
-          <li><a href="#feed">Feed</a></li>
-          <li><a href="#view-applications">Applications</a></li>
-          <li><a href="#job-preferences">Preferences</a></li>
+          <li><a href="#feed">Job Feed</a></li>
+          <li><a href="#job-preferences">Job Preferences</a></li>
+          <li><a href="#auto-apply-settings">Auto-Apply Settings</a></li>
+          <li><a href="#view-applications">View Applied Jobs</a></li>
           <li><a href="#documents">Documents</a></li>
         </ul>
       </nav>
