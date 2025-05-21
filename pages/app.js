@@ -28,8 +28,8 @@ const pageMap = {
 
 document.addEventListener('DOMContentLoaded', () => {
   // 1) Figure out which HTML file we’re on
-  const file = window.location.pathname.split('/').pop() || '/pages/feed/feed.html';
-  const page = pageMap[file] || pageMap['/pages/feed/feed.html'];
+  const file = window.location.pathname.split('/').pop() || 'feed.html';
+  const page = pageMap[file] || pageMap['feed.html'];
 
   // 2) Grab your app container
   const app = document.getElementById('app');

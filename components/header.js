@@ -11,10 +11,10 @@ export function createHeader() {
     nav.id = 'nav-menu';
     nav.className="nav-menu hidden";
     [
-        { path: '/pages/feed/feed.html',         label: 'Feed' },
-        { path: '/pages/view applications/view-app.html', label: 'Applications' },
-        { path: '/pages/job preferences/job-pref.html',   label: 'Preferences' },
-        { path: '/pages/documents/documents.html',         label: 'Documents' },
+        { path: '/pages/feed/feed.html',         label: 'Job Feed' },
+        { path: '/pages/job preferences/job-pref.html',   label: 'Job Preferences' },
+        { path: '/pages/view applications/view-app.html', label: 'View Applications' },
+        { path: '/pages/documents/documents.html',         label: 'Your Documents' },
       ].forEach(({path,label}) => {
         const a = document.createElement('a');
         a.href = path;
