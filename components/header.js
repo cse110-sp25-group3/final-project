@@ -2,7 +2,6 @@ export function createHeader() {
     const header = document.createElement('header');
     header.className = 'site-header';
     header.innerHTML = `
-      <link rel="stylesheet" href="components/header.css">
       <button id="menu-toggle" class="hamburger-btn" aria-label="Open menu">☰</button>
       <span class="site-title">${document.title}</span>
     `;
@@ -12,8 +11,8 @@ export function createHeader() {
     nav.className="nav-menu hidden";
     [
         { path: '/pages/feed/feed.html',         label: 'Job Feed' },
-        { path: '/pages/job preferences/job-pref.html',   label: 'Job Preferences' },
-        { path: '/pages/view applications/view-app.html', label: 'View Applications' },
+        { path: '/pages/job-preferences/job-pref.html',   label: 'Job Preferences' },
+        { path: '/pages/view-applications/view-app.html', label: 'View Applications' },
         { path: '/pages/documents/documents.html',         label: 'Your Documents' },
       ].forEach(({path,label}) => {
         const a = document.createElement('a');

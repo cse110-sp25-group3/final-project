@@ -9,12 +9,12 @@ const app = document.getElementById('app');
 app.prepend(createHeader());
 
 export function renderFeed(container) {
-  container.innerHTML = `
-    job feed
-  `;
+  console.log('renderFeed called');
+  container.innerHTML = '<h2>Job Feed</h2>';
+  // … your card logic here …
+}
 
   
 
   //TODO: for every job, need to pass in the parameters to show a diff card
   
-}
