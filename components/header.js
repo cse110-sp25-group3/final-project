@@ -2,28 +2,33 @@ export function createHeader() {
     const header = document.createElement('header');
     header.className = 'site-header';
     header.innerHTML = `
-      <link rel="stylesheet" href="components/header.css">
-      <button id="menu-toggle" class="hamburger-btn" aria-label="Toggle menu">☰</button>
-      <span class="site-title">JobSwipe</span>
-      <nav id="nav-menu" class="nav-menu hidden">
-        <ul>
-          <li><a href="#feed">Job Feed</a></li>
-          <li><a href="#job-preferences">Job Preferences</a></li>
-          <li><a href="#auto-apply-settings">Auto-Apply Settings</a></li>
-          <li><a href="#view-applications">View Applied Jobs</a></li>
-          <li><a href="#documents">Documents</a></li>
-        </ul>
-      </nav>
+      <button id="menu-toggle" class="hamburger-btn" aria-label="Open menu">☰</button>
+      <span class="site-title">${document.title}</span>
     `;
-    
+
+    const nav = document.createElement('nav');
+    nav.id = 'nav-menu';
+    nav.className="nav-menu hidden";
+    [
+        { path: '/pages/feed/feed.html',         label: 'Job Feed' },
+        { path: '/pages/job-preferences/job-pref.html',   label: 'Job Preferences' },
+        { path: '/pages/view-applications/view-app.html', label: 'View Applications' },
+        { path: '/pages/documents/documents.html',         label: 'Your Documents' },
+      ].forEach(({path,label}) => {
+        const a = document.createElement('a');
+        a.href = path;
+        a.textContent = label;
+        nav.append(a);
+      });
+      header.append(nav);
+  
+    // ── Mobile menu toggle ──
     const btn  = header.querySelector('#menu-toggle');
     const menu = header.querySelector('#nav-menu');
-  
-    // 1) Spin logic (you already have this)
     btn.addEventListener('click', () => {
-      const menuIsHidden = menu.classList.toggle('hidden');
-      btn.classList.toggle('rotated', !menuIsHidden);
-      if (!menuIsHidden) {
+      const isHidden = menu.classList.toggle('hidden');
+      btn.classList.toggle('rotated', !isHidden);
+      if (!isHidden) {
         btn.textContent = '✕';
         btn.setAttribute('aria-label', 'Close menu');
       } else {
@@ -32,22 +37,20 @@ export function createHeader() {
       }
     });
   
-    // 2) Highlight current page
+    // ── Highlight “current” link based on filename ──
+    const links = header.querySelectorAll('#nav-menu a');
+
     function highlightCurrent() {
-      const links = header.querySelectorAll('.nav-menu a');
-      // use hash; if you’re using real paths, swap in location.pathname
-      const current = window.location.hash || '#feed';
+      const currentPath = window.location.pathname; // e.g. "/pages/feed/feed.html"
       links.forEach(link => {
-        link.classList.toggle(
-          'active',
-          link.getAttribute('href') === current
-        );
+        // Build an absolute URL so pathname is normalized
+        const linkPath = new URL(link.getAttribute('href'), window.location.origin).pathname;
+        link.classList.toggle('active', linkPath === currentPath);
       });
     }
-    // run on load…
+    
+    // Run on initial load
     highlightCurrent();
-    // …and whenever the hash changes
-    window.addEventListener('hashchange', highlightCurrent);
   
     return header;
   }

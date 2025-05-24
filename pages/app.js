@@ -1,38 +1,33 @@
 // pages/app.js
-import { createHeader } from '../components/header.js';
-import { renderFeed } from './feed.js';
-import { renderApplications } from './view-applications.js';
-import { renderPreferences } from './job-preferences.js';
-import { renderDocuments } from './documents.js';
-import { renderAutoApply } from './auto-apply-settings.js';
 
-const routes = {
-  '#feed':              renderFeed,
-  '#view-applications': renderApplications,
-  '#job-preferences':   renderPreferences,
-  '#documents':         renderDocuments,
-  '#auto-apply-settings': renderAutoApply,
+import { createHeader }       from '../components/header.js';
+import { renderFeed }         from './feed/feed.js';
+import { renderApplications } from './view-applications/view-applications.js';   // hyphen, not space
+import { renderPreferences }  from './job-preferences/job-preferences.js';      // hyphen, not space
+import { renderDocuments }    from './documents/documents.js';
+
+const pageMap = {
+  'feed.html':              { render: renderFeed,         title: 'Job Feed' },
+  'view-applications.html': { render: renderApplications, title: 'Your Applications' },
+  'job-preferences.html':   { render: renderPreferences,  title: 'Job Preferences' },
+  'documents.html':         { render: renderDocuments,    title: 'Documents' },
 };
 
-// pages/app.js
 function loadPage() {
-  const app = document.getElementById('app');
-  app.innerHTML = '';             // clear old header+content
-  app.prepend(createHeader());    // mount header
+  const file = window.location.pathname.split('/').pop() || 'feed.html';
+  const pageInfo = pageMap[file] || pageMap['feed.html'];
 
-  // create a spot just for page‐specific content
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+  app.prepend(createHeader(pageInfo.title));
+
   const content = document.createElement('div');
-  content.style.margin = "25px";
   content.id = 'content';
+  content.style.margin = '25px';
   app.append(content);
 
-  const key = window.location.hash || '#feed';
-  const renderFn = routes[key] || renderFeed;
-  renderFn(content);              // pass ONLY the content div
+  console.log(`Rendering ${file}`);
+  pageInfo.render(content);
 }
 
-
-window.addEventListener('DOMContentLoaded', () => {
-  window.addEventListener('hashchange', loadPage);
-  loadPage();
-});
+window.addEventListener('DOMContentLoaded', loadPage);
