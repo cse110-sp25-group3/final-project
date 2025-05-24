@@ -7,7 +7,7 @@
  * @param {string[]} jobSkills   – list of skills the job requires
  * @returns {number}             – match percentage (0–100)
  */
-export function skillAssessment(userSkills, jobSkills){
+function skillAssessment(userSkills, jobSkills){
     if (!Array.isArray(jobSkills) || jobSkills.length === 0){ // if jobSkills array does not meet the requirement
         return 0;
     }
@@ -24,3 +24,5 @@ export function skillAssessment(userSkills, jobSkills){
     const assessment = Math.round((matches / jobSkills.length) * 100);
     return assessment;
 }
+
+module.exports = { skillAssessment };
